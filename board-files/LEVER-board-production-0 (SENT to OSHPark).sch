@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.6.0">
+<eagle version="7.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -5518,7 +5518,7 @@ Qspeed™ Family&lt;br/&gt;
 </class>
 </classes>
 <parts>
-<part name="1:12_TRNSFRMR" library="AKA_test" deviceset="PA0367" device=""/>
+<part name="1_12_TRNSFRMR" library="AKA_test" deviceset="PA0367" device=""/>
 <part name="D1" library="AKA_test" deviceset="QH03BZ600" device="" value="RB751"/>
 <part name="C1" library="adafruit" deviceset="C-US" device="C1812" value="2.2uF"/>
 <part name="Q3" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="P2N2222A" value="MPSA42"/>
@@ -5548,7 +5548,7 @@ Qspeed™ Family&lt;br/&gt;
 ~75% duty cycle</text>
 </plain>
 <instances>
-<instance part="1:12_TRNSFRMR" gate="G$1" x="5.08" y="121.92"/>
+<instance part="1_12_TRNSFRMR" gate="G$1" x="5.08" y="121.92"/>
 <instance part="D1" gate="D$1" x="53.34" y="139.7"/>
 <instance part="C1" gate="G$1" x="68.58" y="124.46"/>
 <instance part="Q3" gate="G$1" x="96.52" y="119.38"/>
@@ -5606,7 +5606,7 @@ Qspeed™ Family&lt;br/&gt;
 <label x="68.58" y="111.76" size="1.778" layer="95"/>
 <label x="45.72" y="104.14" size="1.778" layer="95"/>
 <label x="81.28" y="104.14" size="1.778" layer="95"/>
-<pinref part="1:12_TRNSFRMR" gate="G$1" pin="4"/>
+<pinref part="1_12_TRNSFRMR" gate="G$1" pin="4"/>
 <wire x1="10.16" y1="116.84" x2="27.94" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="116.84" x2="27.94" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="PAD2" gate="G$1" pin="P"/>
@@ -5776,7 +5776,7 @@ Qspeed™ Family&lt;br/&gt;
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="1:12_TRNSFRMR" gate="G$1" pin="3"/>
+<pinref part="1_12_TRNSFRMR" gate="G$1" pin="3"/>
 <wire x1="-15.24" y1="116.84" x2="-33.02" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="116.84" x2="-33.02" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="106.68" x2="0" y2="106.68" width="0.1524" layer="91"/>
@@ -5794,7 +5794,7 @@ Qspeed™ Family&lt;br/&gt;
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="1:12_TRNSFRMR" gate="G$1" pin="1"/>
+<pinref part="1_12_TRNSFRMR" gate="G$1" pin="1"/>
 <wire x1="10.16" y1="142.24" x2="30.48" y2="142.24" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="142.24" x2="33.02" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="D1" gate="D$1" pin="A"/>
@@ -5818,7 +5818,7 @@ Qspeed™ Family&lt;br/&gt;
 <wire x1="-60.706" y1="147.32" x2="-60.706" y2="153.416" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="1:12_TRNSFRMR" gate="G$1" pin="2"/>
+<pinref part="1_12_TRNSFRMR" gate="G$1" pin="2"/>
 <wire x1="-15.24" y1="142.24" x2="-33.02" y2="142.24" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="142.24" x2="-33.02" y2="160.02" width="0.1524" layer="91"/>
 <label x="-33.02" y="157.48" size="1.778" layer="95"/>
