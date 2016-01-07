@@ -28,15 +28,15 @@
 #define ENCODER_OPTIMIZE_INTERRUPTS
 #include <Encoder.h>
 #include <SPI.h>
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+//#include <Wire.h>
+//#include <Adafruit_GFX.h>
+//#include <Adafruit_SSD1306.h>
 
 #define OLED_RESET 5
-Adafruit_SSD1306 display(OLED_RESET);
-#if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please fix Adafruit_SSD1306.h!");
-#endif
+//Adafruit_SSD1306 display(OLED_RESET);
+//#if (SSD1306_LCDHEIGHT != 64)
+//#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+//#endif
 #define encA A2
 #define encB A3
 #define encButton A1
@@ -47,8 +47,8 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define SAW_ASC 3
 #define NOISE 4
 
-char* waveLabels[] = {"SINE", "SQUARE", "A_SAW", "D_SAW", "NOISE"};
-char* modeLabels[] = {"FREQ", "AMP", "WAVE", "DUTY"};
+//char* waveLabels[] = {"SINE", "SQUARE", "A_SAW", "D_SAW", "NOISE"};
+//char* modeLabels[] = {"FREQ", "AMP", "WAVE", "DUTY"};
 volatile int encMode = 0;
 volatile boolean shouldUpdate = true;
 
@@ -91,11 +91,11 @@ void setup() {
   analogWriteFrequency(pwmOut, 375000);
   pinMode(pwmOut, OUTPUT);
   pinMode(encButton, INPUT_PULLUP); // MODE switch
-  attachInterrupt(encButton, encButtonPress, RISING);
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.display();
+  attachInterrupt(encButton, encButtonPress, FALLING);
+  //display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
+  //display.setTextSize(1);
+  //display.setTextColor(WHITE);
+  //display.display();
 }
 
 void loop() {
@@ -182,7 +182,8 @@ void loop() {
   analogWrite(A14, (int)DACval);
 
   if (shouldUpdate) {
-    updateDisplay(delta);
+    //updateDisplay(delta);
+    Serial.println("display update now");
     shouldUpdate = false;
   }
 

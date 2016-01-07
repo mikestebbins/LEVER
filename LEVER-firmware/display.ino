@@ -1,3 +1,4 @@
+/*
 void updateDisplay(long pos) {
   display.clearDisplay();
   for (int i = 0; i < display.width(); i++) {
@@ -7,6 +8,8 @@ void updateDisplay(long pos) {
       display.drawLine(i, 0, i, display.height() - 28, WHITE);
     }
   }
+
+  
 
   display.setCursor(2, display.height() - 24);
   display.print(modeLabels[encMode]);
@@ -28,5 +31,5 @@ void updateDisplay(long pos) {
   display.setCursor(82, display.height() - 12);
   display.print(pos);
   display.display();
-
 }
+*/

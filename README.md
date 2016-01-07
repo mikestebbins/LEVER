@@ -1,3 +1,10 @@
+Mike's notes (2016-01-04)
+1. schematic and silk screen say 2.2 uF capacitor for C1, but link to part in BOM is for a 2200 pF, or 0.0022 uF
+2. 220k resistor spec'd in BOM is WAY too small for pad on board, had to use jumper wire that looks about 50% successful.
+3. Arduino code is all for encoder (except for board testing code), but Eagle Board/Schematic files don't seem to have all the necessary hook-ups for encoder to Teensy.
+4. May have screwed up and forgot to cut Teensy's trace for battery operation before soldering to board.
+
+
 # LEVER
 ####Experiments in electrovibration interaction strategies, inspired by Disney Research papers "Tesla Touch" and "Revel"
 
