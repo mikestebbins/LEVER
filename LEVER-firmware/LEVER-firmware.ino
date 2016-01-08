@@ -29,14 +29,14 @@
 #include <Encoder.h>
 #include <SPI.h>
 //#include <Wire.h>
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #define OLED_RESET 5
-//Adafruit_SSD1306 display(OLED_RESET);
-//#if (SSD1306_LCDHEIGHT != 64)
-//#error("Height incorrect, please fix Adafruit_SSD1306.h!");
-//#endif
+Adafruit_SSD1306 display(OLED_RESET);
+#if (SSD1306_LCDHEIGHT != 64)
+#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+#endif
 #define encA A2
 #define encB A3
 #define encButton A1
@@ -47,8 +47,8 @@
 #define SAW_ASC 3
 #define NOISE 4
 
-//char* waveLabels[] = {"SINE", "SQUARE", "A_SAW", "D_SAW", "NOISE"};
-//char* modeLabels[] = {"FREQ", "AMP", "WAVE", "DUTY"};
+char* waveLabels[] = {"SINE", "SQUARE", "A_SAW", "D_SAW", "NOISE"};
+char* modeLabels[] = {"FREQ", "AMP", "WAVE", "DUTY"};
 volatile int encMode = 0;
 volatile boolean shouldUpdate = true;
 
@@ -63,7 +63,7 @@ float minAmpl = 0.0;
 float maxAmpl = 2000.0;
 float DACamplitude = 2000.0;
 
-int waveType = 0; // sine, square, saw descending, saw ascending, noise
+int waveType = 4; // sine, square, saw descending, saw ascending, noise
 #define waveMax 4
 #define waveMin 0
 
@@ -83,6 +83,9 @@ long newDuty = 10;
 long newPosition = 0;
 long lastPosition = 0;
 
+int LEDpin = 13;
+boolean modifyLoop = 1;
+
 Encoder myEnc(encA, encB);
 
 void setup() {
@@ -91,28 +94,33 @@ void setup() {
   analogWriteFrequency(pwmOut, 375000);
   pinMode(pwmOut, OUTPUT);
   pinMode(encButton, INPUT_PULLUP); // MODE switch
+  pinMode(LEDpin, OUTPUT);
   attachInterrupt(encButton, encButtonPress, FALLING);
-  //display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
-  //display.setTextSize(1);
-  //display.setTextColor(WHITE);
-  //display.display();
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.display();
+  digitalWrite(LEDpin, HIGH);
 }
 
 void loop() {
   long newPosition = myEnc.read();
   long delta = newPosition - lastPosition;
 
-  if (abs((delta)) != 0) {
+ // if (abs((delta)) != 0) {
+  if ( modifyLoop == 1) {
     // calculate delta, toggle updateDisplay
     // increment the appropriate mode-position by the delta?
     switch (encMode) {
       case 0: // FREQ
-        newFreq += delta;
+        //newFreq += delta;
+        newFreq = maxFreq;
         lastFreq = newFreq;
         phaseOffset = constrain(floatmap(newFreq, 0, 1023, minFreq, maxFreq), minFreq, maxFreq);
         break;
       case 1: // AMP
-        newAmp += delta;
+        //newAmp += delta;
+        newAmp = maxAmpl;
         lastAmp = newAmp;
         DACamplitude = constrain(floatmap(newAmp, 0.0, 1023.0, minAmpl, maxAmpl), minAmpl, maxAmpl);
         break;
@@ -126,10 +134,12 @@ void loop() {
 
         
         lastWave = newWave;
-        waveType = constrain(map(newWave, 0, 3, waveMin, waveMax), waveMin, waveMax);
+        //waveType = constrain(map(newWave, 0, 3, waveMin, waveMax), waveMin, waveMax);
+        waveType = 1;
         break;
       case 3: // DUTY
-        newDuty += delta;
+        //newDuty += delta;
+        newDuty = maxDuty;
         lastDuty = newDuty;
         dutyCycle = constrain(floatmap(newDuty, 0.0, 1023.0, minDuty, maxDuty), minDuty, maxDuty);
         break;
@@ -182,12 +192,13 @@ void loop() {
   analogWrite(A14, (int)DACval);
 
   if (shouldUpdate) {
-    //updateDisplay(delta);
-    Serial.println("display update now");
+    updateDisplay(delta);
+    //Serial.println("display update now");
     shouldUpdate = false;
   }
 
   shouldUpdate = false;
+  modifyLoop = 0;
 }
 
 void encButtonPress() {
