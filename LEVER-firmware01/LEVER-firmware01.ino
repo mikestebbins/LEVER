@@ -84,6 +84,8 @@ long newPosition = 0;
 long lastPosition = 0;
 
 int ledPin = 13;
+int counter = 0;
+int counter2 = 0;
 
 Encoder myEnc(encA, encB);
 
@@ -107,6 +109,14 @@ void setup() {
 void loop() {
   long newPosition = myEnc.read();
   long delta = newPosition - lastPosition;
+
+  if (counter >= 10000)  {
+    Serial.print("tick-tock");  Serial.println(counter2);
+    counter = 0;
+    counter2++;
+  }
+
+counter++;
 
   if (abs((delta)) != 0) {
     // calculate delta, toggle updateDisplay
