@@ -63,7 +63,7 @@ float minAmpl = 0.0;
 float maxAmpl = 2000.0;
 float DACamplitude = 2000.0;
 
-int waveType = 0; // sine, square, saw descending, saw ascending, noise
+int waveType = 4; // sine, square, saw descending, saw ascending, noise
 #define waveMax 4
 #define waveMin 0
 
@@ -83,7 +83,12 @@ long newDuty = 10;
 long newPosition = 0;
 long lastPosition = 0;
 
+<<<<<<< HEAD
 int ledPin = 13;
+=======
+int LEDpin = 13;
+boolean modifyLoop = 1;
+>>>>>>> origin/master
 
 Encoder myEnc(encA, encB);
 
@@ -93,6 +98,7 @@ void setup() {
   analogWriteFrequency(pwmOut, 375000);
   pinMode(pwmOut, OUTPUT);
   pinMode(encButton, INPUT_PULLUP); // MODE switch
+<<<<<<< HEAD
   pinMode(ledPin, OUTPUT);
   attachInterrupt(encButton, encButtonPress, FALLING);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
@@ -102,23 +108,35 @@ void setup() {
   Serial.begin(9600);
 
   digitalWrite(ledPin,HIGH);
+=======
+  pinMode(LEDpin, OUTPUT);
+  attachInterrupt(encButton, encButtonPress, FALLING);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.display();
+  digitalWrite(LEDpin, HIGH);
+>>>>>>> origin/master
 }
 
 void loop() {
   long newPosition = myEnc.read();
   long delta = newPosition - lastPosition;
 
-  if (abs((delta)) != 0) {
+ // if (abs((delta)) != 0) {
+  if ( modifyLoop == 1) {
     // calculate delta, toggle updateDisplay
     // increment the appropriate mode-position by the delta?
     switch (encMode) {
       case 0: // FREQ
-        newFreq += delta;
+        //newFreq += delta;
+        newFreq = maxFreq;
         lastFreq = newFreq;
         phaseOffset = constrain(floatmap(newFreq, 0, 1023, minFreq, maxFreq), minFreq, maxFreq);
         break;
       case 1: // AMP
-        newAmp += delta;
+        //newAmp += delta;
+        newAmp = maxAmpl;
         lastAmp = newAmp;
         DACamplitude = constrain(floatmap(newAmp, 0.0, 1023.0, minAmpl, maxAmpl), minAmpl, maxAmpl);
         break;
@@ -132,10 +150,12 @@ void loop() {
 
         
         lastWave = newWave;
-        waveType = constrain(map(newWave, 0, 3, waveMin, waveMax), waveMin, waveMax);
+        //waveType = constrain(map(newWave, 0, 3, waveMin, waveMax), waveMin, waveMax);
+        waveType = 1;
         break;
       case 3: // DUTY
-        newDuty += delta;
+        //newDuty += delta;
+        newDuty = maxDuty;
         lastDuty = newDuty;
         dutyCycle = constrain(floatmap(newDuty, 0.0, 1023.0, minDuty, maxDuty), minDuty, maxDuty);
         break;
@@ -194,6 +214,7 @@ void loop() {
   }
 
   shouldUpdate = false;
+  modifyLoop = 0;
 }
 
 void encButtonPress() {

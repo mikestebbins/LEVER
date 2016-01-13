@@ -7,6 +7,7 @@ void updateDisplay(long pos) {
       // fill in the column if it's not
       display.drawLine(i, 0, i, display.height() - 28, WHITE);
     }
+<<<<<<< HEAD
     */
   Serial.print("encMode ="); Serial.println(modeLabels[encMode]);
   Serial.print("waveType ="); Serial.println(waveLabels[waveType]);
@@ -18,6 +19,10 @@ void updateDisplay(long pos) {
   Serial.println("------------------------------------");
 
   /*
+=======
+  }
+
+>>>>>>> origin/master
   display.setCursor(2, display.height() - 24);
   display.print(modeLabels[encMode]);
   
@@ -40,4 +45,7 @@ void updateDisplay(long pos) {
   display.display();
   */
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
